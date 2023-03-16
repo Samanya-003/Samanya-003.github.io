@@ -158,6 +158,7 @@ const Name = document.querySelector("#Name")
 const Email = document.querySelector("#Email")
 const quantities = document.querySelectorAll(".quantities") 
 const itemsList = ["M & M's", "Rainbow Juicy Candy", "Sour gummy worms"]
+const prices = document.querySelectorAll(".price") 
   
   
 document.querySelector('#submit').addEventListener('click', Submit)
@@ -165,10 +166,14 @@ document.querySelector('#submit').addEventListener('click', Submit)
 	
 	function Submit() {
 	  const timestamp = buildTimestamp()
+	  let total = 0
   	  let cart = { }
   	  for  (let i=0; i<quantities.length; i=i+1) {
   	  	if (quantities[i].value != "0" && quantities[i].value != "") {	
+ 		    let price = prices[i].innerHTML.replace('$', '')
+			total = total + quantities[i].value * price 
   	  		cart[itemsList[i]] = parseInt(quantities[i].value) 
+ 
   	  	}
   	  	quantities[i].value = ""
   	  }
@@ -178,6 +183,8 @@ document.querySelector('#submit').addEventListener('click', Submit)
 		  Name: Name.value,
 	      email: Email.value,
 		  cart: cart,
+		  totalPrice: total,
+		  paid: "not yet",
 	  });
 
 	  Name.value = ""
